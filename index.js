@@ -3,16 +3,25 @@ const express = require('express'),
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const dishRouter = require('./routes/dishRouter');
+const promoRouter = require('./routes/promoRouter');
+const leaderRouter = require('./routes/leaderRouter');
 
 const hostname = 'localhost';
 const port = 3000;
 
+// With this we say that our application will be using express
 const app = express();
+
 app.use(morgan('dev'));
+
+// This means that we will use the development version
 app.use(bodyParser.json());
+
 app.use('/dishes', dishRouter);
+app.use('/promotions', promoRouter);
+app.use('/leaders', leaderRouter);
 
-
+// This line tells express to serve the static files of __dirname (our project path) + / public
 app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next) => {
@@ -29,7 +38,7 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-/* "THIS PART IS SHIFTED TO dishRouter.js FILE"
+/* "THese 2 PARTs are SHIFTED TO dishRouter.js FILE"
 
 app.all('/dishes', (req,res,next) => {
   res.statusCode = 200;
@@ -53,9 +62,9 @@ app.put('/dishes', (req, res, next) => {
 app.delete('/dishes', (req, res, next) => {
     res.end('Deleting all dishes');
 });
-*/
 
-/*
+
+
 app.get('/dishes/:dishId', (req,res,next) => {
     res.end('Will send details of the dish: ' + req.params.dishId +' to you!');
 });
